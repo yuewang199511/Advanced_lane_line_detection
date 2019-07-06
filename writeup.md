@@ -33,7 +33,7 @@ The goals / steps of this project are the following:
 3.Undistort each image using **cv2.undistort** with calibrated camera matrix and distort coefficients
 
 **Original Distorted Image**
-![alt text][distort| 50%]
+![alt text][distort]
 
 **Calibrated Image**
-![alt text][undist| 50%]
+![alt text][undist]
