@@ -20,7 +20,7 @@ The goals / steps of this project are the following:
 
 [//]: # "image reference"
 [distort]: ./camera_cal/calibration2.jpg "distort"
-[undist]: ./caliberation_output/calibration2_output.jpg "undistort"
+[undist]: ./calibration_output/calibration2_output.jpg "undistort"
 
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
