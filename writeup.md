@@ -19,7 +19,7 @@ The goals / steps of this project are the following:
 [link1]: https://classroom.udacity.com/nanodegrees/nd013/parts/168c60f1-cc92-450a-a91b-e427c326e6a7/modules/5d1efbaa-27d0-4ad5-a67a-48729ccebd9c/lessons/78afdfc4-f0fa-4505-b890-5d8e6319e15c/concepts/a30f45cb-c1c0-482c-8e78-a26604841ec0
 
 [//]: # "image reference"
-[distort]: ./camera_cal/calibration2.jpg "distort"
+[distort]: (./camera_cal/calibration2.jpg) "distort"
 [undist]: ./calibration_output/calibration2_output.jpg "undistort"
 
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -33,7 +33,7 @@ The goals / steps of this project are the following:
 3.Undistort each image using **cv2.undistort** with calibrated camera matrix and distort coefficients
 
 **Original Distorted Image**
-![alt text][distort]{:height="50%" width="50%"}
+![alt text][distort| 50%]
 
 **Calibrated Image**
-![alt text][undist]{:height="50%" width="50%"}
+![alt text][undist| 50%]
