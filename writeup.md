@@ -19,18 +19,18 @@ The goals / steps of this project are the following:
 [link1]: https://classroom.udacity.com/nanodegrees/nd013/parts/168c60f1-cc92-450a-a91b-e427c326e6a7/modules/5d1efbaa-27d0-4ad5-a67a-48729ccebd9c/lessons/78afdfc4-f0fa-4505-b890-5d8e6319e15c/concepts/a30f45cb-c1c0-482c-8e78-a26604841ec0
 
 [//]: # "image reference"
-[chess_undist]: ./output_images/chess_board_undist.png
-[car_undist]: ./output_images/car_undistort_figure.png
-
+[chess_undist]: ./output_images/chess_board_undist.png "chess_undist"
+[car_undist]: ./output_images/car_undistort_figure.png "car_undist"
+[thresh_result]: output_images/thresh_result.png "thresh_test"
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ### Camera Calibration
 
 1. Set up objective chess board corner coordiantes which represent the location of internal corners. Assuming all chess celles are with 1 unit length and width (referencing video in [link1]). Also set up a list of detected corners from images by using **cv2.findChessboardCorners**
 
-2.Apply **cv2.calibrateCamera** to each image with objectvie and image points to get calibrated camera matrix and distort coefficients
+2. Apply **cv2.calibrateCamera** to each image with objectvie and image points to get calibrated camera matrix and distort coefficients
 
-3.Undistort each image using **cv2.undistort** with calibrated camera matrix and distort coefficients
+3. Undistort each image using **cv2.undistort** with calibrated camera matrix and distort coefficients
 
 ![alt text][chess_undist]
 
@@ -43,4 +43,12 @@ The bumps near two sides of front cover are flatten in the undistorted image.
 
 #### Threshold Binary image
 This step provides a binary image that show lane line pixels from the original image. 
-In this project, gradient magnitude and saturation thresholds are applied. 
+
+1. Apply sobel magnitude threshold to the image. The magnitude is a weighted sum of sobel x and y. By default, the mignitude is totally contributed by sobel x, because lane lines are usually nearlly vertical.
+
+2. Apply saturation threshold to the image.
+
+3. Select pixels that met one of the above threshold to create a binary image.
+
+4. Select pixels within a region of interest as lane line pixels.
+![alt text][thresh_result]
