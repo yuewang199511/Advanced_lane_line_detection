@@ -22,11 +22,18 @@ The goals / steps of this project are the following:
 [thresh_result]: output_images/thresh_result.png "thresh_test"
 [perspective_trans_result]: ./output_images/per_trans_result.png "perspective_transformation"
 [fitting_result]: ./output_images/fitting_result.png "fitting result"
+[single_result]: ./output_images/drawn_result.png "drawn result"
 
 [link1]: https://classroom.udacity.com/nanodegrees/nd013/parts/168c60f1-cc92-450a-a91b-e427c326e6a7/modules/5d1efbaa-27d0-4ad5-a67a-48729ccebd9c/lessons/78afdfc4-f0fa-4505-b890-5d8e6319e15c/concepts/a30f45cb-c1c0-482c-8e78-a26604841ec0 "calibration link"
 
 [link2]: https://classroom.udacity.com/nanodegrees/nd013/parts/168c60f1-cc92-450a-a91b-e427c326e6a7/modules/5d1efbaa-27d0-4ad5-a67a-48729ccebd9c/lessons/626f183c-593e-41d7-a828-eda3c6122573/concepts/4dd9f2c2-1722-412f-9a02-eec3de0c2207 "line fitting link"
+
+[link3]: https://classroom.udacity.com/nanodegrees/nd013/parts/168c60f1-cc92-450a-a91b-e427c326e6a7/modules/5d1efbaa-27d0-4ad5-a67a-48729ccebd9c/lessons/626f183c-593e-41d7-a828-eda3c6122573/concepts/1a352727-390e-469d-87ea-c91cd78869d6 "Curvature ratio"
+
+[link4]: https://classroom.udacity.com/nanodegrees/nd013/parts/168c60f1-cc92-450a-a91b-e427c326e6a7/modules/5d1efbaa-27d0-4ad5-a67a-48729ccebd9c/lessons/626f183c-593e-41d7-a828-eda3c6122573/concepts/2f928913-21f6-4611-9055-01744acc344f "Curvature equation"
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
+
+All codes are in file"./advanced_lane_detection.ipynb" 
 
 ### Camera Calibration
 
@@ -57,7 +64,7 @@ This step provides a binary image that show lane line pixels from the original i
 4. Select pixels within a region of interest as lane line pixels.
 ![alt text][thresh_result]
 
-#### 3. Bird's view prospective transform
+#### 3. Bird's view perspective transform
 Set up a trapezoid in the original image and calculate its transformation matrix to a rectangle which it should be when viewed from bird's view. The transformation matrix is calculated by **cv2.getPerspectiveTransform(src, dst)**
 
 When setting up the trapezoid, the height of the trapezoid was tuned until the resulted lane lines are almost parallel to each other.
@@ -77,4 +84,21 @@ The pipeline of extracting lane line pixels is following the process in [link2],
 
 Tested on the same image as in [link2].
 
+#### 5. Measuring Curvature
 
+1. Translating pixel coordinate into meters, used the same scaling ratio as in  [link3]
+
+ym_per_pix = 30/720 # meters per pixel in y dimension
+xm_per_pix = 3.7/700 # meters per pixel in x dimension
+
+and re-calculate the fitting coefficients for each lane line in meters unit.
+
+2. Calculate curvature used the equation in [link4], which is calculated by the fitting coefficients in meters and the bottom y coordinates in the image.
+
+In the final overlay output, the curvature is curvature = (left_cur + right_cur) / 2
+
+
+#### 6. Draw result
+
+Used **cv2.putText** to write text on the undistorted image and apply a mask on it to show lane area.
+![alt text][single_result]
