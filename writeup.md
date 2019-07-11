@@ -15,13 +15,17 @@ The goals / steps of this project are the following:
 * Determine the curvature of the lane and vehicle position with respect to center.
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
-[//]: # "link reference"
-[link1]: https://classroom.udacity.com/nanodegrees/nd013/parts/168c60f1-cc92-450a-a91b-e427c326e6a7/modules/5d1efbaa-27d0-4ad5-a67a-48729ccebd9c/lessons/78afdfc4-f0fa-4505-b890-5d8e6319e15c/concepts/a30f45cb-c1c0-482c-8e78-a26604841ec0
 
 [//]: # "image reference"
 [chess_undist]: ./output_images/chess_board_undist.png "chess_undist"
 [car_undist]: ./output_images/car_undistort_figure.png "car_undist"
 [thresh_result]: output_images/thresh_result.png "thresh_test"
+[perspective_trans_result]: ./output_images/per_trans_result.png "perspective_transformation"
+[fitting_result]: ./output_images/fitting_result.png "fitting result"
+
+[link1]: https://classroom.udacity.com/nanodegrees/nd013/parts/168c60f1-cc92-450a-a91b-e427c326e6a7/modules/5d1efbaa-27d0-4ad5-a67a-48729ccebd9c/lessons/78afdfc4-f0fa-4505-b890-5d8e6319e15c/concepts/a30f45cb-c1c0-482c-8e78-a26604841ec0 "calibration link"
+
+[link2]: https://classroom.udacity.com/nanodegrees/nd013/parts/168c60f1-cc92-450a-a91b-e427c326e6a7/modules/5d1efbaa-27d0-4ad5-a67a-48729ccebd9c/lessons/626f183c-593e-41d7-a828-eda3c6122573/concepts/4dd9f2c2-1722-412f-9a02-eec3de0c2207 "line fitting link"
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ### Camera Calibration
@@ -41,7 +45,7 @@ The bumps near two sides of front cover are flatten in the undistorted image.
 ![alt text][car_undist]
 
 
-#### Threshold Binary image
+#### 2. Threshold Binary image
 This step provides a binary image that show lane line pixels from the original image. 
 
 1. Apply sobel magnitude threshold to the image. The magnitude is a weighted sum of sobel x and y. By default, the mignitude is totally contributed by sobel x, because lane lines are usually nearlly vertical.
@@ -52,3 +56,25 @@ This step provides a binary image that show lane line pixels from the original i
 
 4. Select pixels within a region of interest as lane line pixels.
 ![alt text][thresh_result]
+
+#### 3. Bird's view prospective transform
+Set up a trapezoid in the original image and calculate its transformation matrix to a rectangle which it should be when viewed from bird's view. The transformation matrix is calculated by **cv2.getPerspectiveTransform(src, dst)**
+
+When setting up the trapezoid, the height of the trapezoid was tuned until the resulted lane lines are almost parallel to each other.
+![alt text][perspective_trans_result]
+
+#### 4. Lane Line pixel extraction and line fitting
+
+The pipeline of extracting lane line pixels is following the process in [link2], which has two major steps: pixel selection, and line fitting.
+
+1. Create a histogram of the "top" half of the image as the "bottom" half is usually noisy.
+
+2. Find the middle x coordinates for left and lane lines by the peak positions in the left and right halves of the histogram.
+
+3. Create sliding windows to scan feasible pixels along the lane lines. The windows should positioned around the center of the lane lines and its height(number) and width influence the scanning precision. The width should be close to the true width of lane line and the height(number) should be enough to follow the curvature if the lane lines are curved.
+
+![alt text][fitting_result]
+
+Tested on the same image as in [link2].
+
+
