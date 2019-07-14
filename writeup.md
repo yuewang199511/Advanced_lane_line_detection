@@ -90,10 +90,10 @@ Tested on the same image as in [link2].
 
 1. Translating pixel coordinate into meters, used the same scaling ratio as in  [link3]
 
-ym_per_pix = 30/720 # meters per pixel in y dimension
-xm_per_pix = 3.7/700 # meters per pixel in x dimension
+    ym_per_pix = 30/720 # meters per pixel in y dimension
+    xm_per_pix = 3.7/700 # meters per pixel in x dimension
 
-and re-calculate the fitting coefficients for each lane line in meters unit.
+    and re-calculate the fitting coefficients for each lane line in meters unit.
 
 2. Calculate curvature used the equation in [link4], which is calculated by the fitting coefficients in meters and the bottom y coordinates in the image.
 
@@ -135,7 +135,7 @@ Curvature and horizontal distance are checked because the identified lines shoul
 
 This is a result from the **project_video.mp4**, the identification process in performed on the whole video.
 
-![alt text][fitting_result] [video_output]
+![alt text][video_output]
 
 
 ### Discussion
