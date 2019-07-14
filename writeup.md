@@ -103,7 +103,7 @@ In the final overlay output, the curvature is curvature = (left_cur + right_cur)
 #### 6. Draw result
 
 Used **cv2.putText** to write text on the undistorted image and apply a mask on it to show lane area.
-This is the link to the output video[single_result]
+![alt text][single_result]
 
 ### Pipe Line Between Frames: Smoothing && Sanity check
 
@@ -135,7 +135,7 @@ Curvature and horizontal distance are checked because the identified lines shoul
 
 This is a result from the **project_video.mp4**, the identification process in performed on the whole video.
 
-![alt text][video_output]
+This is the link to the output video result :  [video_output]
 
 
 ### Discussion
