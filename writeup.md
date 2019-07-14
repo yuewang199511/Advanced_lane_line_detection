@@ -103,7 +103,7 @@ In the final overlay output, the curvature is curvature = (left_cur + right_cur)
 #### 6. Draw result
 
 Used **cv2.putText** to write text on the undistorted image and apply a mask on it to show lane area.
-![alt text][single_result]
+This is the link to the output video[single_result]
 
 ### Pipe Line Between Frames: Smoothing && Sanity check
 
