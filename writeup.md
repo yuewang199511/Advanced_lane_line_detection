@@ -24,6 +24,8 @@ The goals / steps of this project are the following:
 [fitting_result]: ./output_images/fitting_result.png "fitting result"
 [single_result]: ./output_images/drawn_result.png "drawn result"
 
+[video_output]: ./output_images/whole_output_video.mp4 "output_video"
+
 [link1]: https://classroom.udacity.com/nanodegrees/nd013/parts/168c60f1-cc92-450a-a91b-e427c326e6a7/modules/5d1efbaa-27d0-4ad5-a67a-48729ccebd9c/lessons/78afdfc4-f0fa-4505-b890-5d8e6319e15c/concepts/a30f45cb-c1c0-482c-8e78-a26604841ec0 "calibration link"
 
 [link2]: https://classroom.udacity.com/nanodegrees/nd013/parts/168c60f1-cc92-450a-a91b-e427c326e6a7/modules/5d1efbaa-27d0-4ad5-a67a-48729ccebd9c/lessons/626f183c-593e-41d7-a828-eda3c6122573/concepts/4dd9f2c2-1722-412f-9a02-eec3de0c2207 "line fitting link"
@@ -102,3 +104,46 @@ In the final overlay output, the curvature is curvature = (left_cur + right_cur)
 
 Used **cv2.putText** to write text on the undistorted image and apply a mask on it to show lane area.
 ![alt text][single_result]
+
+### Pipe Line Between Frames: Smoothing && Sanity check
+
+#### 1. Smoothing
+As suggested in this projects tips, a class to record last result for each left and right lines is defined.
+These parameters from the last 10 frames are recorded:
+
+1. x coodinates of fitted points
+
+2. line coefficients
+
+3. curvature of the last iteration
+
+These information are used to perform smoothing and used as back-up result if a sanity check fails.
+
+A smoothing is performed when a new result is added in the recorder and a avereaged result for the above information will be the output for this frame. Smoothing is utilized to avoid big turbulence of drawn result between frames.
+
+#### 2. Sanity Check
+
+A sanity check is performed when the fitted lines and curvature are calculated, and it fails when:
+
+1. The difference of curvature between left and right lines exceeds a tolerance.
+
+2. The variance (**calculated by numpy.var**) of horizontal distance between left and right lines exceeds a tolerance.
+
+Curvature and horizontal distance are checked because the identified lines should be parallel in this project.
+
+### Video Result
+
+This is a result from the **project_video.mp4**, the identification process in performed on the whole video.
+
+![alt text][fitting_result] [video_output]
+
+
+### Discussion
+
+#### 1. Deviation when the road turns
+
+When the road turns or the car is bumping, the identified road area will take 2 ~ 3 seconds to catch up with the change. The smoothing process may be the main process for this problem, as the memory size of the smoother is quite large( 10 frames). To solve this problems, a smaller memory should be set. In addition, the recorder should compare difference between the new result and the old results to determine if the road is turning. If the road turns, the smoother should clear the memory and re-calculate the lines from scratch.
+
+#### 1. Frequent shadows
+
+The program often fails to produce relatively fine fitted lines when a shaded area is approaching. This may be caused by noisy information in the edge detection process. My idea to solve this problem is to only obtain saturation threshold result when the shaded area comes. As saturation filter often produce much more pixels than the edge detection filter, we can safely reconstruct the line only from saturation. 
